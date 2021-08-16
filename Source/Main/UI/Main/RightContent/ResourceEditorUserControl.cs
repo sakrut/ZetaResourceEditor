@@ -1259,7 +1259,7 @@ namespace ZetaResourceEditor.UI.Main.RightContent
             get
             {
                 var p = MainForm.Current.ProjectFilesControl.Project ?? Project.Empty;
-                var s = p == null ? @"en-US" : p.NeutralLanguageCode;
+                var s = p == null ? @"pl-PL" : p.NeutralLanguageCode;
                 return s;
             }
         }

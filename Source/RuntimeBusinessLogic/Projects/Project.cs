@@ -34,7 +34,7 @@
         private bool _hideTranslatedRows;
         private bool _useSpellChecker = true;
         private string _resXIndentChar = "\t";
-        private string _neutralLanguageCode = @"en-US";
+        private string _neutralLanguageCode = @"pl-PL";
         private bool _isModified;
 
         private readonly List<string> _languagesToDisplay = new();
@@ -800,7 +800,7 @@
 
         public string NeutralLanguageCode
         {
-            get => string.IsNullOrEmpty(_neutralLanguageCode) ? @"en-us" : _neutralLanguageCode.ToLowerInvariant();
+            get => string.IsNullOrEmpty(_neutralLanguageCode) ? @"pl-PL" : _neutralLanguageCode.ToLowerInvariant();
             set => _neutralLanguageCode = value?.ToLowerInvariant();
         }
 
@@ -845,7 +845,7 @@
                 XmlHelper.ReadAttribute(
                     out _neutralLanguageCode,
                     configurationNode.Attributes[@"neutralLanguageCode"],
-                    @"en-US");
+                    @"pl-PL");
             }
 
             // --

@@ -391,7 +391,7 @@
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(70, 17);
             this.labelControl2.TabIndex = 3;
-            this.labelControl2.Text = "E.g. \"en-US\"";
+            this.labelControl2.Text = "E.g. \"pl-PL\"";
             // 
             // labelControl1
             // 

@@ -58,7 +58,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.Translation.Azure
 
                     // Build the request.
                     request.Headers.Add(@"Ocp-Apim-Subscription-Key", /*getAuthToken*/(subscriptionKey));
-                    /*request.Headers.Add("Ocp-Apim-Subscription-Region", location);*/
+                    request.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
 
                     // Send the request and get response.
                     HttpResponseMessage response = null;
@@ -199,7 +199,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.Translation.Azure
 
                     // Build the request.
                     request.Headers.Add(@"Ocp-Apim-Subscription-Key", /*getAuthToken*/(subscriptionKey));
-                    /*request.Headers.Add("Ocp-Apim-Subscription-Region", location);*/
+                    request.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
 
                     // Send the request and get response.
                     HttpResponseMessage response = null;
@@ -285,7 +285,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.Translation.Azure
 
                     // Build the request.
                     request.Headers.Add(@"Ocp-Apim-Subscription-Key", /*getAuthToken*/(subscriptionKey));
-                    /*request.Headers.Add("Ocp-Apim-Subscription-Region", location);*/
+                    request.Headers.Add("Ocp-Apim-Subscription-Region", "westeurope");
 
                     // Send the request and get response.
                     HttpResponseMessage response = null;

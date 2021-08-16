@@ -366,7 +366,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
             CommentVisibilityScope commentVisibilityScope)
         {
             // 2011-11-17, Uwe Keim.
-            var neutralCode = project == null ? @"en-US" : project.NeutralLanguageCode;
+            var neutralCode = project == null ? @"pl-PL" : project.NeutralLanguageCode;
             var neutralColumnIndex = findColumnIndex(row.Table, neutralCode, 2);
 
             var columnCount = row.Table.Columns.Count;
