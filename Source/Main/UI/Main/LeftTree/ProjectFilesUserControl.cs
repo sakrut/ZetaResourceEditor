@@ -1653,7 +1653,7 @@ namespace ZetaResourceEditor.UI.Main.LeftTree
                     case null:
                         popupMenuNone.ShowPopup(MousePosition);
                         break;
-                    case Project:
+                    case RuntimeBusinessLogic.Projects.Project:
                         popupMenuProject.ShowPopup(MousePosition);
                         break;
                     case ProjectFolder:
