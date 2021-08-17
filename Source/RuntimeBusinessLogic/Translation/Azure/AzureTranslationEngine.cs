@@ -29,7 +29,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.Translation.Azure
         string ITranslationEngine.UniqueInternalName => @"1e8232f6-d1ee-4b22-8b78-2c8a01a17a0a";
         string ITranslationEngine.UserReadableName => "Microsoft Translator (Azure)";
         bool ITranslationEngine.SupportsArrayTranslation => true;
-        int ITranslationEngine.MaxArraySize => 25;
+        int ITranslationEngine.MaxArraySize => 75;
         public string AppIDLink => @"https://zeta.li/zre-translation-appid-bing";
 
         bool ITranslationEngine.AreAppIDsSyntacticallyValid(string appID) =>
@@ -303,15 +303,20 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.Translation.Azure
 
                     // https://www.newtonsoft.com/json/help/html/QueryJsonSelectTokenJsonPath.htm
                     var o = JArray.Parse(r2);
-                    var t = o[0][@"translations"];
 
-                    if (t != null)
+                    foreach (var jToken in o)
                     {
-                        foreach (var u in t)
+                        var t = jToken[@"translations"];
+
+                        if (t != null)
                         {
-                            tr.Add(u[@"text"]?.Value<string>());
-                        }
+                            foreach (var u in t)
+                            {
+                                tr.Add(u[@"text"]?.Value<string>());
+                            }
+                        }    
                     }
+                    
                 }
             );
 

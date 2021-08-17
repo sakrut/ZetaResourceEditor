@@ -1,4 +1,6 @@
-﻿namespace ZetaResourceEditor.UI.Translation
+﻿using System.Threading.Tasks;
+
+namespace ZetaResourceEditor.UI.Translation
 {
     using DevExpress.XtraEditors;
     using DevExpress.XtraEditors.Controls;
@@ -582,7 +584,7 @@
                                                         column.ColumnName)
                                                 : column.ColumnName;
 
-                                        if (refLanguageCode == raw)
+                                        if (refLanguageCode == raw.ToLower())
                                         {
                                             refValueIndex = column.Ordinal;
                                             break;
@@ -848,6 +850,8 @@
             public string SourceText { get; set; }
         }
 
+       
+
         private int translateArray(
             string appID,
             ITranslationEngine ti,
@@ -878,7 +882,7 @@
             {
                 foreach (DataRow row in table.Rows)
                 {
-                    items.Clear();
+                 
                     if (row != null)
                     {
                         if (bw.CancellationPending)
@@ -887,7 +891,7 @@
                         }
 
                         var text = row[column] as string;
-                        if (!string.IsNullOrEmpty(text) && text.Trim().Length > 0)
+                        if (!string.IsNullOrWhiteSpace(text))
                         {
                             continue;
                         }
@@ -905,125 +909,125 @@
                             continue;
                         }
 
-                        items.Add(new TranslateItemInfo { Row = row, SourceText = sourceText });
-                    }
-
-                    // --
-                    // Pack into blocks.
-
-                    var blocks = new List<List<TranslateItemInfo>>();
-
-                    for (var index = 0; index < items.Count; index++)
-                    {
-                        if (index % ti.MaxArraySize == 0)
-                        {
-                            blocks.Add(new List<TranslateItemInfo>());
-                        }
-
-                        blocks[blocks.Count - 1].Add(items[index]);
-                    }
-
-                    // --
-                    // Translate each block in batch.
-
-                    foreach (var block in blocks)
-                    {
-                        if (block != null)
-                        {
-                            if (bw.CancellationPending)
-                            {
-                                throw new OperationCanceledException();
-                            }
-
-                            if (delayMilliseconds > 0)
-                            {
-                                Thread.Sleep(delayMilliseconds);
-                            }
-
-                            var sourceTexts = block.Select(itemInfo => itemInfo.SourceText).ToList();
-
-                            try
-                            {
-                                var sourceLanguageCode = ti.MapCultureToSourceLanguageCode(
-                                    appID,
-                                    CultureHelper.CreateCultureErrorTolerant(refLanguageCode));
-                                var destinationLanguageCode = ti.MapCultureToDestinationLanguageCode(
-                                    appID,
-                                    CultureHelper.CreateCultureErrorTolerant(raw));
-
-                                if (useExistingTranslations)
-                                {
-                                    // Alle die nehmen, die schon übersetzt sind. Also quasi "aus Cache".
-                                    for (var index = 0; index < sourceTexts.Count; ++index)
-                                    {
-                                        var dstText = imss?.GetTranslation(refLanguageCode, raw, sourceTexts[index]);
-                                        if (dstText != null)
-                                        {
-                                            block[index].Row[column] = prefixSuccess + dstText;
-
-                                            translationSuccessCount++;
-                                            internallyExistingTranslationTranslatedSuccessCount++;
-
-                                            sourceTexts[index] = string.Empty; // Markieren als "erledigt".
-                                        }
-                                    }
-                                }
-
-                                if (!useExistingTranslationsOnly && sourceTexts.Any(s => !string.IsNullOrEmpty(s)))
-                                {
-                                    var destinationTexts =
-                                        ti.TranslateArray(
-                                            appID,
-                                            sourceTexts.ToArray(),
-                                            sourceLanguageCode,
-                                            destinationLanguageCode,
-                                            _project.TranslationWordsToProtect,
-                                            _project.TranslationWordsToRemove);
-
-                                    for (var index = 0; index < block.Count; ++index)
-                                    {
-                                        if (destinationTexts[index] != null)
-                                        {
-                                            block[index].Row[column] = prefixSuccess + destinationTexts[index];
-
-                                            // Merken für ggf. nächsten Durchlauf.
-                                            if (useExistingTranslations)
-                                            {
-                                                imss?.AddTranslation(
-                                                    refLanguageCode,
-                                                    raw,
-                                                    sourceTexts[index],
-                                                    destinationTexts[index]);
-                                            }
-
-                                            translationSuccessCount++;
-                                        }
-                                    }
-                                }
-                            }
-                            catch (Exception x)
-                            {
-                                translationErrorCount++;
-
-                                if (continueOnErrors)
-                                {
-                                    var destinationText = prefixError + x.Message;
-
-                                    foreach (var t in block)
-                                    {
-                                        if (t?.Row?[column] != null) t.Row[column] = destinationText;
-                                    }
-                                }
-                                else
-                                {
-                                    throw;
-                                }
-                            }
-
-                            translationCount++;
-                        }
+                        items.Add(new TranslateItemInfo {Row = row, SourceText = sourceText});
                     }
                 }
+                // --
+                // Pack into blocks.
+
+                var blocks = new List<List<TranslateItemInfo>>();
+
+                for (var index = 0; index < items.Count; index++)
+                {
+                    if (index % ti.MaxArraySize == 0)
+                    {
+                        blocks.Add(new List<TranslateItemInfo>());
+                    }
+
+                    blocks[blocks.Count - 1].Add(items[index]);
+                }
+
+                // --
+                // Translate each block in batch.
+
+                foreach (var block in blocks)
+                {
+                    if (block != null)
+                    {
+                        if (bw.CancellationPending)
+                        {
+                            throw new OperationCanceledException();
+                        }
+
+                        if (delayMilliseconds > 0)
+                        {
+                            Thread.Sleep(delayMilliseconds);
+                        }
+
+                        var sourceTexts = block.Select(itemInfo => itemInfo.SourceText).ToList();
+
+                        try
+                        {
+                            var sourceLanguageCode = ti.MapCultureToSourceLanguageCode(
+                                appID,
+                                CultureHelper.CreateCultureErrorTolerant(refLanguageCode));
+                            var destinationLanguageCode = ti.MapCultureToDestinationLanguageCode(
+                                appID,
+                                CultureHelper.CreateCultureErrorTolerant(raw));
+
+                            if (useExistingTranslations)
+                            {
+                                // Alle die nehmen, die schon übersetzt sind. Also quasi "aus Cache".
+                                for (var index = 0; index < sourceTexts.Count; ++index)
+                                {
+                                    var dstText = imss?.GetTranslation(refLanguageCode, raw, sourceTexts[index]);
+                                    if (dstText != null)
+                                    {
+                                        block[index].Row[column] = prefixSuccess + dstText;
+
+                                        translationSuccessCount++;
+                                        internallyExistingTranslationTranslatedSuccessCount++;
+
+                                        sourceTexts[index] = string.Empty; // Markieren als "erledigt".
+                                    }
+                                }
+                            }
+
+                            if (!useExistingTranslationsOnly && sourceTexts.Any(s => !string.IsNullOrEmpty(s)))
+                            {
+                                var destinationTexts =
+                                    ti.TranslateArray(
+                                        appID,
+                                        sourceTexts.ToArray(),
+                                        sourceLanguageCode,
+                                        destinationLanguageCode,
+                                        _project.TranslationWordsToProtect,
+                                        _project.TranslationWordsToRemove);
+
+                                for (var index = 0; index < block.Count; ++index)
+                                {
+                                    if (destinationTexts[index] != null)
+                                    {
+                                        block[index].Row[column] = prefixSuccess + destinationTexts[index];
+
+                                        // Merken für ggf. nächsten Durchlauf.
+                                        if (useExistingTranslations)
+                                        {
+                                            imss?.AddTranslation(
+                                                refLanguageCode,
+                                                raw,
+                                                sourceTexts[index],
+                                                destinationTexts[index]);
+                                        }
+
+                                        translationSuccessCount++;
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception x)
+                        {
+                            translationErrorCount++;
+
+                            if (continueOnErrors)
+                            {
+                                var destinationText = prefixError + x.Message;
+
+                                foreach (var t in block)
+                                {
+                                    if (t?.Row?[column] != null) t.Row[column] = destinationText;
+                                }
+                            }
+                            else
+                            {
+                                throw;
+                            }
+                        }
+
+                        translationCount++;
+                    }
+                }
+            
             }
 
             return translationSuccessCount;

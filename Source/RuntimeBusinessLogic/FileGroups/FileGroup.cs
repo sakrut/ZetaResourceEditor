@@ -1257,7 +1257,11 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
                 _fileInfos.Add(ffi);
             }
         }
-
+        private class TranslateItemInfo
+        {
+            public DataRow Row { get; set; }
+            public string SourceText { get; set; }
+        }
         private void translateTexts(
             Project project,
             FileInformation destinationFfi,
@@ -1302,33 +1306,70 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
                         CultureHelper.CreateCultureErrorTolerant(destinationLanguageCode));
 
                 // --
+                var items = new List<TranslateItemInfo>();
 
                 foreach (DataRow row in table.Rows)
                 {
                     var sourceText = ConvertHelper.ToString(row[2]);
 
-                    if (!string.IsNullOrEmpty(sourceText))
+                    if (!string.IsNullOrWhiteSpace(sourceText))
                     {
+                        items.Add(new TranslateItemInfo {Row = row, SourceText = sourceText});
+                    }
+                }
+
+                // --
+                // Pack into blocks.
+
+                var blocks = new List<List<TranslateItemInfo>>();
+
+                for (var index = 0; index < items.Count; index++)
+                {
+                    if (index % ti.MaxArraySize == 0)
+                    {
+                        blocks.Add(new List<TranslateItemInfo>());
+                    }
+
+                    blocks[blocks.Count - 1].Add(items[index]);
+                }
+
+                foreach (var block in blocks)
+                {
+                    if (block != null)
+                    {
+                        
+
+
                         if (delayMilliseconds > 0)
                         {
                             Thread.Sleep(delayMilliseconds);
                         }
 
+                        var sourceTexts = block.Select(itemInfo => itemInfo.SourceText).ToList();
+
                         try
                         {
-                            var destinationText =
-                                prefix +
-                                ti.Translate(
+                            var destinationTexts =ti.TranslateArray(
                                     appID,
-                                    sourceText,
+                                    sourceTexts.ToArray(),
                                     slc,
                                     dlc,
                                     project.TranslationWordsToProtect,
                                     project.TranslationWordsToRemove);
+                           
 
-                            row[2] = destinationText;
+                            for (var index = 0; index < block.Count; ++index)
+                            {
+                                if (destinationTexts[index] != null)
+                                {
+                                    block[index].Row[2] = prefix + destinationTexts[index];
 
-                            translationSuccessCount++;
+                                    translationSuccessCount++;
+                                }
+                            }
+                    
+
+                            
                         }
                         catch (Exception x)
                         {
@@ -1340,9 +1381,9 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
 
                                 var destinationText = prefixError + x.Message;
 
-                                if (row[2] != null)
+                                foreach (var t in block)
                                 {
-                                    row[2] = destinationText;
+                                    if (t?.Row?[2] != null) t.Row[2] = destinationText;
                                 }
                             }
                             else
@@ -1352,9 +1393,11 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
                         }
 
                         translationCount++;
+
                     }
                 }
 
+                
                 // Write back.
                 data.SaveDataTableToResxFiles(project, table, false, false);
             }
