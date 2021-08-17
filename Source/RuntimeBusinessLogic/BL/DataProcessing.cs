@@ -380,6 +380,8 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.BL
             string cultureCaption,
             string text)
         {
+            if ("PLEASE SELECT TWO DISTINCT LANGUAGES".Equals(text))
+                return;
             if (captionIndexCache.TryGetValue(cultureCaption, out var columnIndex))
             {
                 row[columnIndex] = text;

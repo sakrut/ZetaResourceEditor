@@ -584,7 +584,7 @@ namespace ZetaResourceEditor.UI.Translation
                                                         column.ColumnName)
                                                 : column.ColumnName;
 
-                                        if (refLanguageCode == raw.ToLower())
+                                        if (refLanguageCode == raw.ToLowerInvariant())
                                         {
                                             refValueIndex = column.Ordinal;
                                             break;
