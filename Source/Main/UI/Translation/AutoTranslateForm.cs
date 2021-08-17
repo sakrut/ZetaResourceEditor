@@ -582,7 +582,7 @@
                                                         column.ColumnName)
                                                 : column.ColumnName;
 
-                                        if (refLanguageCode == raw)
+                                        if (refLanguageCode == raw.ToLowerInvariant())
                                         {
                                             refValueIndex = column.Ordinal;
                                             break;
