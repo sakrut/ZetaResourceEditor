@@ -70,7 +70,10 @@
             this.myLabelControl1 = new ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl();
             this.xtraTabPage2 = new ExtendedControlsLibrary.Skinning.CustomTabControl.MyXtraTabPage();
             this.xtraTabPage3 = new ExtendedControlsLibrary.Skinning.CustomTabControl.MyXtraTabPage();
+            this.displayFileGroupWithoutFolderCheckEdit = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
             this.hideFileGroupFilesInTreeCheckEdit = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
+            this.hideRowsWithUntranslatableNameCheckEdit = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
+            this.myCheckEdit1 = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
             this.colorifyNullCellsCheckEdit = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
             this.hideTranslatedRowsCheck = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
             this.persistGridSettingsCheckEdit = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
@@ -81,6 +84,8 @@
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.labelControl8 = new ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl();
             this.baseNameDotCountSpinEdit = new ExtendedControlsLibrary.Skinning.CustomSpinEdit.MySpinEdit();
+            this.untranslatableTextEdit = new ExtendedControlsLibrary.Skinning.CustomTextEdit.MyTextEdit();
+            this.myLabelControl3 = new ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl();
             this.labelControl9 = new ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl();
             this.defaultTypesTextEdit = new ExtendedControlsLibrary.Skinning.CustomTextEdit.MyTextEdit();
             this.labelControl6 = new ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl();
@@ -89,7 +94,6 @@
             this.neutralLanguageFileNamePatternTextEdit = new ExtendedControlsLibrary.Skinning.CustomTextEdit.MyTextEdit();
             this.panelControl1 = new ExtendedControlsLibrary.Skinning.CustomPanel.MyPanelControl();
             this.defaultToolTipController1 = new DevExpress.Utils.DefaultToolTipController(this.components);
-            this.displayFileGroupWithoutFolderCheckEdit = new ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.readOnlySaveBehaviourComboBox.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ignoreWindowsFormsDesignerFiles.Properties)).BeginInit();
@@ -113,7 +117,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.ResXIndentCharTextEdit.Properties)).BeginInit();
             this.xtraTabPage2.SuspendLayout();
             this.xtraTabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.displayFileGroupWithoutFolderCheckEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hideFileGroupFilesInTreeCheckEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hideRowsWithUntranslatableNameCheckEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.myCheckEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorifyNullCellsCheckEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.hideTranslatedRowsCheck.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.persistGridSettingsCheckEdit.Properties)).BeginInit();
@@ -122,12 +129,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.baseNameDotCountSpinEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.untranslatableTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultTypesTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nonNeutralLanguageFileNamePatternTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.neutralLanguageFileNamePatternTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).BeginInit();
             this.panelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.displayFileGroupWithoutFolderCheckEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // readOnlySaveBehaviourComboBox
@@ -389,7 +396,7 @@
             this.labelControl2.Enabled = false;
             this.labelControl2.Location = new System.Drawing.Point(230, 45);
             this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(70, 17);
+            this.labelControl2.Size = new System.Drawing.Size(64, 17);
             this.labelControl2.TabIndex = 3;
             this.labelControl2.Text = "E.g. \"pl-PL\"";
             // 
@@ -626,6 +633,8 @@
             this.xtraTabPage3.Controls.Add(this.hideEmptyRowsCheck);
             this.xtraTabPage3.Controls.Add(this.displayFileGroupWithoutFolderCheckEdit);
             this.xtraTabPage3.Controls.Add(this.hideFileGroupFilesInTreeCheckEdit);
+            this.xtraTabPage3.Controls.Add(this.hideRowsWithUntranslatableNameCheckEdit);
+            this.xtraTabPage3.Controls.Add(this.myCheckEdit1);
             this.xtraTabPage3.Controls.Add(this.hideInternalDesignerRowsCheckEdit);
             this.xtraTabPage3.Controls.Add(this.colorifyNullCellsCheckEdit);
             this.xtraTabPage3.Controls.Add(this.hideTranslatedRowsCheck);
@@ -635,6 +644,17 @@
             this.xtraTabPage3.Padding = new System.Windows.Forms.Padding(9);
             this.xtraTabPage3.Size = new System.Drawing.Size(502, 471);
             this.xtraTabPage3.Text = "Grid and UI settings";
+            // 
+            // displayFileGroupWithoutFolderCheckEdit
+            // 
+            this.displayFileGroupWithoutFolderCheckEdit.Location = new System.Drawing.Point(12, 228);
+            this.displayFileGroupWithoutFolderCheckEdit.Name = "displayFileGroupWithoutFolderCheckEdit";
+            this.displayFileGroupWithoutFolderCheckEdit.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.displayFileGroupWithoutFolderCheckEdit.Properties.Appearance.Options.UseFont = true;
+            this.displayFileGroupWithoutFolderCheckEdit.Properties.AutoWidth = true;
+            this.displayFileGroupWithoutFolderCheckEdit.Properties.Caption = "Show only file names, not folders in the tree";
+            this.displayFileGroupWithoutFolderCheckEdit.Size = new System.Drawing.Size(279, 21);
+            this.displayFileGroupWithoutFolderCheckEdit.TabIndex = 8;
             // 
             // hideFileGroupFilesInTreeCheckEdit
             // 
@@ -646,6 +666,28 @@
             this.hideFileGroupFilesInTreeCheckEdit.Properties.Caption = "Hide file groups in the tree";
             this.hideFileGroupFilesInTreeCheckEdit.Size = new System.Drawing.Size(180, 21);
             this.hideFileGroupFilesInTreeCheckEdit.TabIndex = 7;
+            // 
+            // hideRowsWithUntranslatableNameCheckEdit
+            // 
+            this.hideRowsWithUntranslatableNameCheckEdit.Location = new System.Drawing.Point(12, 255);
+            this.hideRowsWithUntranslatableNameCheckEdit.Name = "hideRowsWithUntranslatableNameCheckEdit";
+            this.hideRowsWithUntranslatableNameCheckEdit.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.hideRowsWithUntranslatableNameCheckEdit.Properties.Appearance.Options.UseFont = true;
+            this.hideRowsWithUntranslatableNameCheckEdit.Properties.AutoWidth = true;
+            this.hideRowsWithUntranslatableNameCheckEdit.Properties.Caption = "Hide rows contain untranslatable names";
+            this.hideRowsWithUntranslatableNameCheckEdit.Size = new System.Drawing.Size(256, 21);
+            this.hideRowsWithUntranslatableNameCheckEdit.TabIndex = 2;
+            // 
+            // myCheckEdit1
+            // 
+            this.myCheckEdit1.Location = new System.Drawing.Point(36, 93);
+            this.myCheckEdit1.Name = "myCheckEdit1";
+            this.myCheckEdit1.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.myCheckEdit1.Properties.Appearance.Options.UseFont = true;
+            this.myCheckEdit1.Properties.AutoWidth = true;
+            this.myCheckEdit1.Properties.Caption = "Hide rows starting with \">>\" (Windows Forms internal resources)";
+            this.myCheckEdit1.Size = new System.Drawing.Size(402, 21);
+            this.myCheckEdit1.TabIndex = 2;
             // 
             // colorifyNullCellsCheckEdit
             // 
@@ -688,6 +730,8 @@
             this.xtraTabPage4.Controls.Add(this.pictureBox7);
             this.xtraTabPage4.Controls.Add(this.labelControl8);
             this.xtraTabPage4.Controls.Add(this.baseNameDotCountSpinEdit);
+            this.xtraTabPage4.Controls.Add(this.untranslatableTextEdit);
+            this.xtraTabPage4.Controls.Add(this.myLabelControl3);
             this.xtraTabPage4.Controls.Add(this.labelControl9);
             this.xtraTabPage4.Controls.Add(this.defaultTypesTextEdit);
             this.xtraTabPage4.Controls.Add(this.labelControl6);
@@ -778,6 +822,34 @@
             this.baseNameDotCountSpinEdit.Properties.NullValuePrompt = null;
             this.baseNameDotCountSpinEdit.Size = new System.Drawing.Size(51, 24);
             this.baseNameDotCountSpinEdit.TabIndex = 5;
+            // 
+            // untranslatableTextEdit
+            // 
+            this.untranslatableTextEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.untranslatableTextEdit.Bold = false;
+            this.untranslatableTextEdit.CueText = null;
+            this.untranslatableTextEdit.Location = new System.Drawing.Point(12, 220);
+            this.untranslatableTextEdit.MaximumSize = new System.Drawing.Size(0, 24);
+            this.untranslatableTextEdit.MinimumSize = new System.Drawing.Size(0, 24);
+            this.untranslatableTextEdit.Name = "untranslatableTextEdit";
+            this.untranslatableTextEdit.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.untranslatableTextEdit.Properties.Appearance.Options.UseFont = true;
+            this.untranslatableTextEdit.Properties.MaskSettings.Set("mask", null);
+            this.untranslatableTextEdit.Properties.NullValuePrompt = null;
+            this.untranslatableTextEdit.Properties.ShowNullValuePrompt = ((DevExpress.XtraEditors.ShowNullValuePromptOptions)((DevExpress.XtraEditors.ShowNullValuePromptOptions.EditorFocused | DevExpress.XtraEditors.ShowNullValuePromptOptions.EditorReadOnly)));
+            this.untranslatableTextEdit.Size = new System.Drawing.Size(452, 24);
+            this.untranslatableTextEdit.TabIndex = 8;
+            // 
+            // myLabelControl3
+            // 
+            this.myLabelControl3.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.myLabelControl3.Appearance.Options.UseFont = true;
+            this.myLabelControl3.Location = new System.Drawing.Point(12, 197);
+            this.myLabelControl3.Name = "myLabelControl3";
+            this.myLabelControl3.Size = new System.Drawing.Size(139, 17);
+            this.myLabelControl3.TabIndex = 7;
+            this.myLabelControl3.Text = "Untranslatable patterns:";
             // 
             // labelControl9
             // 
@@ -885,17 +957,6 @@
             // 
             this.defaultToolTipController1.DefaultController.AutoPopDelay = 50000;
             // 
-            // displayFileGroupWithoutFolderCheckEdit
-            // 
-            this.displayFileGroupWithoutFolderCheckEdit.Location = new System.Drawing.Point(12, 228);
-            this.displayFileGroupWithoutFolderCheckEdit.Name = "displayFileGroupWithoutFolderCheckEdit";
-            this.displayFileGroupWithoutFolderCheckEdit.Properties.Appearance.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.displayFileGroupWithoutFolderCheckEdit.Properties.Appearance.Options.UseFont = true;
-            this.displayFileGroupWithoutFolderCheckEdit.Properties.AutoWidth = true;
-            this.displayFileGroupWithoutFolderCheckEdit.Properties.Caption = "Show only file names, not folders in the tree";
-            this.displayFileGroupWithoutFolderCheckEdit.Size = new System.Drawing.Size(279, 21);
-            this.displayFileGroupWithoutFolderCheckEdit.TabIndex = 8;
-            // 
             // ProjectSettingsForm
             // 
             this.AcceptButton = this.buttonOK;
@@ -946,7 +1007,10 @@
             this.xtraTabPage2.PerformLayout();
             this.xtraTabPage3.ResumeLayout(false);
             this.xtraTabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.displayFileGroupWithoutFolderCheckEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hideFileGroupFilesInTreeCheckEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hideRowsWithUntranslatableNameCheckEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.myCheckEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorifyNullCellsCheckEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.hideTranslatedRowsCheck.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.persistGridSettingsCheckEdit.Properties)).EndInit();
@@ -956,12 +1020,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.baseNameDotCountSpinEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.untranslatableTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.defaultTypesTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nonNeutralLanguageFileNamePatternTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.neutralLanguageFileNamePatternTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.panelControl1)).EndInit();
             this.panelControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.displayFileGroupWithoutFolderCheckEdit.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1029,5 +1093,9 @@
         private ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl myLabelControl2;
         private ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit keepFolderStructureOnImportCheckEdit;
         private ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit displayFileGroupWithoutFolderCheckEdit;
+        private ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit hideRowsWithUntranslatableNameCheckEdit;
+        private ExtendedControlsLibrary.Skinning.CustomCheckEdit.MyCheckEdit myCheckEdit1;
+        private ExtendedControlsLibrary.Skinning.CustomTextEdit.MyTextEdit untranslatableTextEdit;
+        private ExtendedControlsLibrary.Skinning.CustomLabelEdit.MyLabelControl myLabelControl3;
     }
 }

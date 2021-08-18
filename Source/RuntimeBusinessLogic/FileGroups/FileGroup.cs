@@ -425,9 +425,26 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
         {
             var name = row[@"Name"] as string;
 
+            return IsInternalRow(name);
+        }
+
+        public static bool IsInternalRow(string name)
+        {
             return string.IsNullOrEmpty(name) ||
                    name.StartsWith(@">>") ||
                    !name.Equals(@"$this.Text") && name.StartsWith(@"$this.");
+        }
+        public static bool IsUntranslable(DataRow row,Project project)
+        {
+            var name = row[@"Name"] as string;
+
+            return IsUntranslable(name,project);
+        }
+
+        public static bool IsUntranslable(string name,Project project)
+        {
+            
+            return project.DefaultUntranslatableNamesArray.Any(x => name.Contains(x) || Regex.Match(name, x).Success);;
         }
 
         public static string ExtractPlaceholders(
@@ -1465,5 +1482,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
             }
             return csProjResult;
         }
+
+        
     }
 }

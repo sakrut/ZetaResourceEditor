@@ -126,18 +126,7 @@
   <metadata name="defaultToolTipController1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>295, 17</value>
   </metadata>
-  <metadata name="optionsPopupMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>135, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="button1.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAr2AAAK9gHCr3ADAAAASElE
-        QVQ4T6XLCwoAEBAAUfe/NDbJ+BQNr9UUm/InpIN0kA7SQTrIpp64jsN/HXJYF2P4TsjZy3JA7m7LAekg
-        HaSDdJAO0sipAP8J7iDSKDygAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="pictureBox8.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAARpJREFUOE+t
@@ -166,6 +155,17 @@
         uAQzZr+2g3F/89RPYPgG9sJVeqtk3M7MugjjIU1S38EKzsoioj4GB7zFeyaLsqgwnvQotoreAVzDKzjg
         MX0Pdl1CSmMztgi/A7fgg3IPh1kbDKhb6ITfhe4tnEL9AerBFuohfhe9fYmtMuszsaVRX2NaRfh32MQW
         mUm2fytpdBepDqF+ltju4eFF6uQCOH37q9yJwN8/pu3VNJ8MKBGogwsS0wAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="optionsPopupMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>135, 17</value>
+  </metadata>
+  <data name="button1.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAr2AAAK9gHCr3ADAAAASElE
+        QVQ4T6XLCwoAEBAAUfe/NDbJ+BQNr9UUm/InpIN0kA7SQTrIpp64jsN/HXJYF2P4TsjZy3JA7m7LAekg
+        HaSDdJAO0sipAP8J7iDSKDygAAAAAElFTkSuQmCC
 </value>
   </data>
 </root>

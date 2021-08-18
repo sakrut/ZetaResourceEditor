@@ -766,6 +766,8 @@ namespace ZetaResourceEditor.UI.Translation
                         // http://www.codeproject.com/KB/aspnet/ZetaResourceEditor.aspx?msg=3367544#xx3367544xx
                         if (FileGroup.IsInternalRow(row)) continue;
 
+                        if (_project.HideUntranslableRows &&  FileGroup.IsUntranslable(row,_project)) continue;
+
                         var sourceText = row[refValueIndex] as string;
 
                         if (string.IsNullOrEmpty(sourceText)) continue;
@@ -902,6 +904,7 @@ namespace ZetaResourceEditor.UI.Translation
                         {
                             continue;
                         }
+                        if (_project.HideUntranslableRows &&  FileGroup.IsUntranslable(row,_project)) continue;
 
                         var sourceText = row[refValueIndex] as string;
 

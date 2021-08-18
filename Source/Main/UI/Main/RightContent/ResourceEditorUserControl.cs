@@ -1987,7 +1987,7 @@ namespace ZetaResourceEditor.UI.Main.RightContent
                     }
                 }
 
-                if (project != null && project.HideInternalDesignerRows)
+                if (project != null && (project.HideInternalDesignerRows||project.HideUntranslableRows))
                 {
                     var row =
                         (DataRowView)
@@ -1995,7 +1995,12 @@ namespace ZetaResourceEditor.UI.Main.RightContent
 
                     if (row != null &&
                         // Column 0=FileGroup checksum, column 1=Tag name.
-                        ConvertHelper.ToString(row[1], string.Empty).StartsWith(@">>"))
+                        (
+                            ( project.HideInternalDesignerRows && FileGroup.IsInternalRow(ConvertHelper.ToString(row[1], string.Empty)))
+                        ||
+                            ( project.HideUntranslableRows && FileGroup.IsUntranslable(ConvertHelper.ToString(row[1], string.Empty),project))
+                        )
+                        )
                     {
                         e.Visible = false;
                         e.Handled = true;

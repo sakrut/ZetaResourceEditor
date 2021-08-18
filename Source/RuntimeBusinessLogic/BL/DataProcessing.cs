@@ -456,7 +456,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.BL
 
                     var rowsToSave = table.Rows
                         .Cast<DataRow>()
-                        .Where(row => !SkipSavingRow(row));
+                        .Where(row => !SkipSavingRow(row,project));
 
                     foreach (var row in rowsToSave) {
                         var fileGroupCheckSum = ConvertHelper.ToInt64(row[@"FileGroup"]);
@@ -633,10 +633,11 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.BL
             storeFiles(project);
         }
 
-        private static bool SkipSavingRow(DataRow row) {
+        private static bool SkipSavingRow(DataRow row, Project project) {
             return row.RowState == DataRowState.Deleted 
                    || row.RowState == DataRowState.Unchanged 
-                   || FileGroup.IsInternalRow(row);
+                   || FileGroup.IsInternalRow(row)
+                   || FileGroup.IsUntranslable(row,project);
         }
 
         private static string escapeXsltChars(

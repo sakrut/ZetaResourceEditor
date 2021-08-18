@@ -426,6 +426,7 @@
             }
         }
 
+
         public string DefaultFileTypesToIgnore
         {
             get
@@ -436,6 +437,51 @@
                 return result ?? @".aspx;.ascx;.asmx;.master;.sitemap";
             }
             set => DynamicSettingsGlobal.PersistValue(@"DefaultFileTypesToIgnore", value);
+        }
+
+        public string[] DefaultUntranslatableNamesArray
+        {
+            get
+            {
+                var types = DefaultUntranslatableNames;
+                if (string.IsNullOrEmpty(types))
+                {
+                    return new string[] { };
+                }
+                else
+                {
+                    var result = new HashSet<string>();
+
+                    foreach (var s in types.Split(
+                        new[] {@",", @";"},
+                        StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        var t = s.Trim('*', ' ');
+                        if (!string.IsNullOrEmpty(t))
+                        {
+                            if (!t.StartsWith(@"."))
+                            {
+                                t = @"." + t;
+                            }
+
+                            result.Add(t);
+                        }
+                    }
+
+                    return result.ToArray();
+                }
+            }
+        }
+        public string DefaultUntranslatableNames
+        {
+            get
+            {
+                var result = ConvertHelper.ToString(
+                    DynamicSettingsGlobal.RetrieveValue(@"DefaultUntranslatableNames"));
+
+                return result ?? @"Properties.Columns;Properties.Mask;";
+            }
+            set => DynamicSettingsGlobal.PersistValue(@"DefaultUntranslatableNames", value);
         }
 
         public bool IgnoreWindowsFormsResourcesWithDesignerFiles
@@ -549,6 +595,17 @@
                 true);
             set => DynamicSettingsGlobal.PersistValue(
                 @"HideInternalDesignerRows",
+                value);
+        }
+
+        public bool HideUntranslableRows
+        {
+            get => ConvertHelper.ToBoolean(
+                DynamicSettingsGlobal.RetrieveValue(
+                    @"HideUntranslableRows"),
+                true);
+            set => DynamicSettingsGlobal.PersistValue(
+                @"HideUntranslableRows",
                 value);
         }
 

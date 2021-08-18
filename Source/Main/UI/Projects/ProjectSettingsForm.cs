@@ -116,6 +116,7 @@
             omitEmptyItemsCheckBox.Checked = _project.OmitEmptyItems;
             hideEmptyRowsCheck.Checked = _project.HideEmptyRows;
             hideTranslatedRowsCheck.Checked = _project.HideTranslatedRows;
+            hideRowsWithUntranslatableNameCheckEdit.Checked = _project.HideUntranslableRows;
             showCommentsColumnInGridCheckEdit.Checked = _project.ShowCommentsColumnInGrid;
             ignoreWindowsFormsDesignerFiles.Checked =
                 _project.IgnoreWindowsFormsResourcesWithDesignerFiles;
@@ -130,6 +131,7 @@
             nonNeutralLanguageFileNamePatternTextEdit.Text = _project.NonNeutralLanguageFileNamePattern;
             baseNameDotCountSpinEdit.Value = _project.BaseNameDotCount;
             defaultTypesTextEdit.Text = _project.DefaultFileTypesToIgnore;
+            untranslatableTextEdit.Text = _project.DefaultUntranslatableNames;
             persistGridSettingsCheckEdit.Checked = _project.PersistGridSettings;
             colorifyNullCellsCheckEdit.Checked = _project.ColorifyNullCells;
             enableExcelExportSnapshotsCheckEdit.Checked = _project.EnableExcelExportSnapshots;
@@ -171,6 +173,7 @@
             _project.ResXIndentChar = StringExtensionMethods.UnreplaceEscapes(ResXIndentCharTextEdit.Text); // KEIN TRIM.
             _project.HideEmptyRows = hideEmptyRowsCheck.Checked;
             _project.HideTranslatedRows = hideTranslatedRowsCheck.Checked;
+            _project.HideUntranslableRows = hideRowsWithUntranslatableNameCheckEdit.Checked;
             _project.ShowCommentsColumnInGrid = showCommentsColumnInGridCheckEdit.Checked;
             _project.IgnoreWindowsFormsResourcesWithDesignerFiles =
                 ignoreWindowsFormsDesignerFiles.Checked;
@@ -184,6 +187,7 @@
             _project.NonNeutralLanguageFileNamePattern = nonNeutralLanguageFileNamePatternTextEdit.Text.Trim();
             _project.BaseNameDotCount = (int)baseNameDotCountSpinEdit.Value;
             _project.DefaultFileTypesToIgnore = defaultTypesTextEdit.Text.Trim();
+            _project.DefaultUntranslatableNames = untranslatableTextEdit.Text.Trim();
             _project.PersistGridSettings = persistGridSettingsCheckEdit.Checked;
             _project.ColorifyNullCells = colorifyNullCellsCheckEdit.Checked;
             _project.EnableExcelExportSnapshots = enableExcelExportSnapshotsCheckEdit.Checked;
@@ -236,5 +240,7 @@
             var ti = TranslationHelper.GetTranslationEngine(_project);
             myLabelControl2.Text = ti.UserReadableName;
         }
+
+        
     }
 }
