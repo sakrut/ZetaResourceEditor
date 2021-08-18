@@ -19,14 +19,37 @@
     /// </summary>
     public sealed class InMemoryTranslationSnapshotController
     {
-        public InMemoryTranslationSnapshot CreateSnapshot(
+        private static InMemoryTranslationSnapshot lastSnapshot = null;
+        public static InMemoryTranslationSnapshot GetSnapshotInThisSession(Project project,
+            string[] languageCodes, string refLanguageCode,
+            BackgroundWorker bw)
+        {
+            refLanguageCode = refLanguageCode.ToLowerInvariant();
+            if (lastSnapshot != null)
+            {
+                if(lastSnapshot.Project.Equals(project)|| project.Name.Equals(lastSnapshot.Project.Name))
+                {
+                    if (lastSnapshot.LagneCodes.Intersect(languageCodes).Count() == languageCodes.Length && lastSnapshot.RefLanguageCode.Equals(refLanguageCode) )
+                    {
+                        return lastSnapshot;
+                    }
+                }
+            }
+            
+            lastSnapshot = new InMemoryTranslationSnapshotController().CreateSnapshot(project, languageCodes,refLanguageCode, bw);
+            
+            return lastSnapshot;
+        }
+        public InMemoryTranslationSnapshot  CreateSnapshot(
             Project project,
-            string[] languageCodes,
+            string[] languageCodes, string refLanguageCode,
             BackgroundWorker bw)
         {
             var imss = new InMemoryTranslationSnapshot();
-
-            project.FileGroups.ForEach(fg => doTakeSnapshot(imss, project, fg, languageCodes, bw));
+            imss.LagneCodes = languageCodes;
+            imss.Project = project;
+            imss.RefLanguageCode = refLanguageCode;
+            project.FileGroups.ForEach(fg => doTakeSnapshot(imss, project, fg, languageCodes,refLanguageCode, bw));
 
             return imss;
         }
@@ -35,7 +58,7 @@
             InMemoryTranslationSnapshot imss,
             Project project,
             IGridEditableData fileGroup,
-            IEnumerable<string> languageCodes,
+            IEnumerable<string> languageCodes, string refLanguageCode,
             BackgroundWorker bw)
         {
             //var fgi = fileGroup.GetFileByLanguageCode(Project, languageCode);
@@ -55,6 +78,7 @@
 
                 var dic = new Dictionary<string, string>();
 
+                string refLangeValue = null;
                 for (var sourceColumnIndex = 2;
                     sourceColumnIndex <
                     table.Columns.Count - 1; // Subtract 1, because last column is ALWAYS the comment.
@@ -69,14 +93,16 @@
                                     table.Columns[sourceColumnIndex].ColumnName)
                             : table.Columns[sourceColumnIndex].ColumnName;
                     languageCode = languageCode.ToLowerInvariant();
-
-                    if (lcs.Contains(languageCode))
+                    if (refLanguageCode.Equals(languageCode))
+                    {
+                        refLangeValue = languageValue;
+                    }else if (lcs.Contains(languageCode))
                     {
                         dic[languageCode] = languageValue;
                     }
                 }
 
-                imss.AddBatchTranslation(dic);
+                imss.AddBatchTranslation(dic,refLangeValue);
 
                 rowIndex++;
             }
@@ -85,7 +111,10 @@
 
     public sealed class InMemoryTranslationSnapshot
     {
-        private readonly List<InMemoryTranslationSnapshotItem> _items = new();
+        internal Project Project = null;
+        internal string[] LagneCodes = null;
+        internal string RefLanguageCode;
+        private readonly Dictionary<string,InMemoryTranslationSnapshotItem> _items = new();
 
         /// <summary>
         /// Liefert NULL zurück, falls nicht gefunden.
@@ -95,32 +124,25 @@
             string destinationLanguageCode,
             string sourceText)
         {
-            var items = _items.Where(
-                i => i.LanguageAndTextPairs.Any(j => j.Key.EqualsNoCase(sourceLanguageCode) &&
-                                                     j.Value.EqualsNoCase(sourceText)));
-
-            foreach (var item in items)
+            if (!_items.ContainsKey(sourceText))
+                return null;
+            
+            var one = _items[sourceText].LanguageAndTextPairs.FirstOrDefault(i => i.Key.EqualsNoCase(destinationLanguageCode));
+            if (one.Value != null)
             {
-                var one = item.LanguageAndTextPairs.FirstOrDefault(i => i.Key.EqualsNoCase(destinationLanguageCode));
-                if (one.Value != null)
-                {
-                    return one.Value;
-                }
+                return one.Value;
             }
-
             return null;
         }
 
-        public void AddBatchTranslation(
-            Dictionary<string, string> languageAndTextPairs)
+        public void AddBatchTranslation(Dictionary<string, string> languageAndTextPairs, string refLangeValue)
         {
-            var item = new InMemoryTranslationSnapshotItem();
-            _items.Add(item);
-
-            foreach (var pair in languageAndTextPairs)
-            {
-                item.LanguageAndTextPairs[pair.Key] = pair.Value;
-            }
+            if(string.IsNullOrWhiteSpace(refLangeValue))
+                return;
+            if(_items.ContainsKey(refLangeValue))
+                return;
+            var item = new InMemoryTranslationSnapshotItem(languageAndTextPairs);
+            _items.Add(refLangeValue,item);
         }
 
         public void AddTranslation(
@@ -129,23 +151,31 @@
             string sourceText,
             string destinationText)
         {
-            var item = _items.FirstOrDefault(
-                i => i.LanguageAndTextPairs.Any(j => j.Key.EqualsNoCase(sourceLanguageCode) &&
-                                                     j.Value.EqualsNoCase(sourceText)));
+            if(string.IsNullOrWhiteSpace(sourceText))
+                return;
 
-            if (item == null)
+            InMemoryTranslationSnapshotItem item;
+            if (!_items.ContainsKey(sourceText))
             {
-                item = new InMemoryTranslationSnapshotItem();
-                _items.Add(item);
+                item = new InMemoryTranslationSnapshotItem(new Dictionary<string, string>());
+                _items.Add(sourceText,item);
             }
-
+            else
+            {
+                item = _items[sourceText];
+            }
             item.LanguageAndTextPairs[destinationLanguageCode] = destinationText;
         }
     }
 
     public sealed class InMemoryTranslationSnapshotItem
     {
-        public Dictionary<string, string> LanguageAndTextPairs { get; } = new();
+        public InMemoryTranslationSnapshotItem(Dictionary<string, string> languageAndTextPairs)
+        {
+            LanguageAndTextPairs = languageAndTextPairs;
+        }
+
+        public Dictionary<string, string> LanguageAndTextPairs { get; private set; }
 
     }
 }

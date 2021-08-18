@@ -104,6 +104,7 @@ namespace ZetaResourceEditor.UI.Translation
         private Project _project;
         private bool _ignore;
         private bool _insideUpdateUI;
+        
 
         public AutoTranslateForm()
         {
@@ -554,10 +555,10 @@ namespace ZetaResourceEditor.UI.Translation
                         {
                             var bw = (BackgroundWorker)s;
 
-                            var imtc = new InMemoryTranslationSnapshotController();
+                            
                             var imss = useExistingTranslations
-                                ? imtc.CreateSnapshot(_project,
-                                    toTranslateLanguageCodes.Concat(new[] { refLanguageCode }).ToArray(),
+                                ? InMemoryTranslationSnapshotController.GetSnapshotInThisSession(_project,
+                                    toTranslateLanguageCodes.Concat(new[] { refLanguageCode }).ToArray(),refLanguageCode,
                                     bw)
                                 : null;
 
@@ -912,6 +913,25 @@ namespace ZetaResourceEditor.UI.Translation
                         items.Add(new TranslateItemInfo {Row = row, SourceText = sourceText});
                     }
                 }
+
+                if (useExistingTranslations)
+                {
+                    // Alle die nehmen, die schon übersetzt sind. Also quasi "aus Cache".
+                    var existTransactionArrary = items.ToArray();
+                    foreach (var item in existTransactionArrary)
+                    {
+                        var dstText = imss?.GetTranslation(refLanguageCode, raw, item.SourceText);
+                        if (dstText != null)
+                        {
+                            item.Row[column] = prefixSuccess + dstText;
+
+                            translationSuccessCount++;
+                            internallyExistingTranslationTranslatedSuccessCount++;
+                            items.Remove(item);
+                        } 
+                    }
+                    
+                }
                 // --
                 // Pack into blocks.
 
@@ -945,7 +965,6 @@ namespace ZetaResourceEditor.UI.Translation
                         }
 
                         var sourceTexts = block.Select(itemInfo => itemInfo.SourceText).ToList();
-
                         try
                         {
                             var sourceLanguageCode = ti.MapCultureToSourceLanguageCode(
@@ -955,23 +974,7 @@ namespace ZetaResourceEditor.UI.Translation
                                 appID,
                                 CultureHelper.CreateCultureErrorTolerant(raw));
 
-                            if (useExistingTranslations)
-                            {
-                                // Alle die nehmen, die schon übersetzt sind. Also quasi "aus Cache".
-                                for (var index = 0; index < sourceTexts.Count; ++index)
-                                {
-                                    var dstText = imss?.GetTranslation(refLanguageCode, raw, sourceTexts[index]);
-                                    if (dstText != null)
-                                    {
-                                        block[index].Row[column] = prefixSuccess + dstText;
-
-                                        translationSuccessCount++;
-                                        internallyExistingTranslationTranslatedSuccessCount++;
-
-                                        sourceTexts[index] = string.Empty; // Markieren als "erledigt".
-                                    }
-                                }
-                            }
+                            
 
                             if (!useExistingTranslationsOnly && sourceTexts.Any(s => !string.IsNullOrEmpty(s)))
                             {
