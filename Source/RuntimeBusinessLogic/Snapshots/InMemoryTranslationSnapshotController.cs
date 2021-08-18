@@ -164,7 +164,7 @@
             {
                 item = _items[sourceText];
             }
-            item.LanguageAndTextPairs[destinationLanguageCode] = destinationText;
+            item.LanguageAndTextPairs[destinationLanguageCode.ToLowerInvariant()] = destinationText;
         }
     }
 
