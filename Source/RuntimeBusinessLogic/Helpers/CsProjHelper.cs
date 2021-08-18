@@ -36,8 +36,8 @@
                     {
                         csProjectWithFileResult.Project = currentCsProject;
                         var dependentUpon = string.Empty;
-
-                        if (mainResourceFilePath != file.Name)
+                        csProjectWithFileResult.DependantUponRootFileName = fileInCsProj.GetMetadataValue(DependentUponLiteral);
+                        if (string.IsNullOrWhiteSpace(csProjectWithFileResult.DependantUponRootFileName) && mainResourceFilePath != file.Name)
                         {
                             csProjectWithFileResult.DependantUponRootFileName = mainResourceFilePath;
                         }

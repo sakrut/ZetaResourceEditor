@@ -637,7 +637,7 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.BL
             return row.RowState == DataRowState.Deleted 
                    || row.RowState == DataRowState.Unchanged 
                    || FileGroup.IsInternalRow(row)
-                   || FileGroup.IsUntranslable(row,project);
+                   || (project.HideUntranslableRows && FileGroup.IsUntranslable(row,project));
         }
 
         private static string escapeXsltChars(

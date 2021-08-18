@@ -757,7 +757,8 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.ExportImportExcel.Export
             if (FileGroup.IsCompleteRowEmpty(row) &&
                 !preparedInformation.ExportCompletelyEmptyRows ||
                 // http://www.codeproject.com/KB/aspnet/ZetaResourceEditor.aspx?msg=3367544#xx3367544xx)
-                FileGroup.IsInternalRow(row))
+                FileGroup.IsInternalRow(row)
+                )
             {
                 return false;
             }
