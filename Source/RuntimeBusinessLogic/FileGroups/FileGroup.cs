@@ -235,7 +235,15 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
             return same ?? result;
         }
 
-        private FileGroupStates TranslationState => _inMemoryState ?? calculateEditingState();
+        private FileGroupStates TranslationState {get
+        {
+            lock (this)
+            {
+                if (_inMemoryState == null)
+                    _inMemoryState = calculateEditingState();
+                return _inMemoryState.Value ;
+            }
+        }}
 
         public FileGroupStateColor TranslationStateColor => TranslateStateToColorKey(TranslationState);
 
@@ -266,7 +274,10 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
                     {
                         result |= FileGroupStates.EmptyRows;
                     }
-
+                    if(IsInternalRow(row))
+                        continue;
+                    if(IsUntranslable(row,project))
+                        continue;
                     if (areTranslationsMissing(project, row, commentVisibilityScope))
                     {
                         result |= FileGroupStates.TranslationsMissing;
@@ -423,8 +434,11 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
         // http://www.codeproject.com/KB/aspnet/ZetaResourceEditor.aspx?msg=3367544#xx3367544xx
         public static bool IsInternalRow(DataRow row)
         {
-            var name = row[@"Name"] as string;
-
+            string name = "";
+            if (row.Table.Columns.Contains("Name"))
+                name =  row[@"Name"] as string;
+            if (row.Table.Columns.Contains("colName"))
+                name =row[@"colName"] as string;
             return IsInternalRow(name);
         }
 
@@ -436,7 +450,11 @@ namespace ZetaResourceEditor.RuntimeBusinessLogic.FileGroups
         }
         public static bool IsUntranslable(DataRow row,Project project)
         {
-            var name = row[@"Name"] as string;
+            string name = "";
+            if (row.Table.Columns.Contains("Name"))
+                name =  row[@"Name"] as string;
+            if (row.Table.Columns.Contains("colName"))
+                name =row[@"colName"] as string;
 
             return IsUntranslable(name,project);
         }
